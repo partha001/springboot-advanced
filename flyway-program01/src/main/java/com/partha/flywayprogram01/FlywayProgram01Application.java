@@ -10,4 +10,6 @@ public class FlywayProgram01Application {
 		SpringApplication.run(FlywayProgram01Application.class, args);
 	}
 
+
+
 }
