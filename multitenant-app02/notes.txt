@@ -1,0 +1,51 @@
+docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase -p 3306:3306 --name  mysql_partha mysql:8.2.0
+
+DROP  table DataSourceConfiguration;
+create table DataSourceConfiguration (
+ `id` bigint NOT NULL,
+ `name` varchar(50),
+ `url` varchar(100),
+ `username` varchar(100),
+ `password` varchar(100),
+ `driverClassName` varchar(100),
+PRIMARY KEY (`id`)
+);
+
+INSERT INTO mydatabase.DataSourceConfiguration (id,name,url,username,password,driverClassName) VALUES
+	 (1,'tenant_1','jdbc:mysql://localhost:3307/mydatabase','root','password','com.mysql.cj.jdbc.Driver'),
+	 (2,'tenant_2','jdbc:mysql://localhost:3308/mydatabase','root','password','com.mysql.cj.jdbc.Driver');
+
+
+docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase -p 3307:3306 --name  mysql_tenant100 mysql:8.2.0
+
+docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase -p 3308:3306 --name  mysql_tenant200 mysql:8.2.0
+
+
+#create the below on the below containers:
+mysql_tenant100
+mysql_tenant200
+
+-- mydatabase.purchase definition
+CREATE TABLE `purchase` (
+  `id` bigint NOT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+testing the application:
+---------------------------
+GET http://localhost:8080/purchases
+request Header:: X-TenantID = tenant_1    or tenant_2 
+
+POST http://localhost:8080/purchases
+request Header:: X-TenantID = tenant_1    or tenant_2 
+payload::
+{
+
+    "id": 300,
+    "name": "purchase1",
+    "category": "electronics"
+}
+
