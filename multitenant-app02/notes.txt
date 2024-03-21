@@ -1,5 +1,9 @@
 docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase -p 3306:3306 --name  mysql_partha mysql:8.2.0
 
+the above container caters to the common database.
+connect to the above database container and execute the below table.
+this table contains the database tenantId , tenantName and their database connection details
+
 DROP  table DataSourceConfiguration;
 create table DataSourceConfiguration (
  `id` bigint NOT NULL,
@@ -11,10 +15,16 @@ create table DataSourceConfiguration (
 PRIMARY KEY (`id`)
 );
 
+
+now inserting tenant connection details into the above database.
+
 INSERT INTO mydatabase.DataSourceConfiguration (id,name,url,username,password,driverClassName) VALUES
 	 (1,'tenant_1','jdbc:mysql://localhost:3307/mydatabase','root','password','com.mysql.cj.jdbc.Driver'),
 	 (2,'tenant_2','jdbc:mysql://localhost:3308/mydatabase','root','password','com.mysql.cj.jdbc.Driver');
 
+
+
+now spinning up two more containers which cater to the above two tenants
 
 docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase -p 3307:3306 --name  mysql_tenant100 mysql:8.2.0
 
@@ -24,6 +34,8 @@ docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase
 #create the below on the below containers:
 mysql_tenant100
 mysql_tenant200
+
+#finally creating a table inside the 2 above ccntainers which will hold some records
 
 -- mydatabase.purchase definition
 CREATE TABLE `purchase` (
