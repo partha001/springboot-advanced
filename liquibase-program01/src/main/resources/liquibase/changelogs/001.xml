@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="mychangeset1" author="user">
+        <sql>
+            CREATE TABLE IF NOT EXISTS  Users (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            username varchar(100) NOT NULL,
+            firstName varchar(50) NOT NULL,
+            lastName varchar(50) DEFAULT NULL,
+            email varchar(100) NOT NULL,
+            PRIMARY KEY (id),
+            UNIQUE KEY uk_username (username)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            -- insert into Users (id,username, firstname, lastname, email) values (100,'partha biswas','partha','biswas','biswas.partha1@gmail.com');
+            insert into Users (username, firstname, lastname, email) values ('partha biswas','partha','biswas','biswas.partha1@gmail.com');
+        </sql>
+    </changeSet>
+
+    <!--creating table using xml - Added the entity Car-->
+    <!--    <changeSet id="mychangeset2" author="user">-->
+    <!--        <createTable tableName="car">-->
+    <!--            <column name="id" type="bigint" autoIncrement="${autoIncrement}">-->
+    <!--                <constraints primaryKey="true" nullable="false" />-->
+    <!--            </column>-->
+    <!--            <column name="make" type="varchar(255)">-->
+    <!--                <constraints nullable="true" />-->
+    <!--            </column>-->
+    <!--            <column name="brand" type="varchar(255)">-->
+    <!--                <constraints nullable="true" />-->
+    <!--            </column>-->
+    <!--            <column name="price" type="double">-->
+    <!--                <constraints nullable="true" />-->
+    <!--            </column>-->
+    <!--        </createTable>-->
+    <!--    </changeSet>-->
+
+
+</databaseChangeLog>
