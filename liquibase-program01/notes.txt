@@ -1,2 +1,8 @@
-#run the below command before running the java program
+# step1: run the below command to get the database up
 docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase -p 3306:3306 --name  mysql_partha mysql:8.2.0
+
+#liquibase will run the database scripts and also insert a record
+
+# Step2: now run the application and visit : http://localhost:8080/users/100
+
+
