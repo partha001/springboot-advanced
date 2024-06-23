@@ -16,7 +16,8 @@
             UNIQUE KEY uk_username (username)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-            insert into Users (id,username, firstname, lastname, email) values (100,'partha biswas','partha','biswas','biswas.partha1@gmail.com');
+            -- insert into Users (id,username, firstname, lastname, email) values (100,'partha biswas','partha','biswas','biswas.partha1@gmail.com');
+            insert into Users (username, firstname, lastname, email) values ('partha biswas','partha','biswas','biswas.partha1@gmail.com');
         </sql>
     </changeSet>
 
