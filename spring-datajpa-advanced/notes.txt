@@ -1,0 +1,2 @@
+h2 database console url:
+http://localhost:8080/myconsole/
