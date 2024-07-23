@@ -1,2 +1,2 @@
-h2 database console url:
-http://localhost:8080/myconsole/
+# step1: run the below command to get the database up
+docker run -d  --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase -p 3306:3306 --name  mysql_partha mysql:8.2.0

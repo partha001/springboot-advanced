@@ -1,14 +1,14 @@
 package org.partha.service;
 
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.util.Strings;
-import org.partha.dto.CustomerNetworthDto;
-import org.partha.dto.NetworthDto;
+import org.partha.dto.CreateCustomerDto;
 import org.partha.entities.Customer;
+import org.partha.projections.NetworthProjection;
 import org.partha.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,6 +66,11 @@ public class MyService {
         return customerRepository.findByNameContaining(containText);
     }
 
+    public List<Customer> findByEmailContains(String containsText) {
+        return customerRepository.findByEmailContains(containsText);
+    }
+
+
 
     public List<Customer> findByAgeLessThan(Integer age) {
         return  customerRepository.findByAgeLessThan(age);
@@ -91,7 +96,7 @@ public class MyService {
         return customerRepository.getCustomerWithEmailUsingNativeQuery(email);
     }
 
-    public List<NetworthDto> getAllNetworth() {
+    public List<NetworthProjection> getAllNetworth() {
         return customerRepository.getAllNetworth();
     }
 
@@ -105,6 +110,31 @@ public class MyService {
         Page<Customer> pageData = customerRepository.findAll(PageRequest.of(pageNumber, pageSize));
         return pageData;
     }
+
+    public Customer createCustomer(CreateCustomerDto dto) {
+        Customer customer = Customer.builder()
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .age(dto.getAge())
+                .build();
+        return customerRepository.save(customer);
+    }
+
+    public List<Customer> emailIsContaining(String containingText) {
+        return customerRepository.findByEmailIsContaining(containingText);
+    }
+
+    public List<Customer> emailLike(String likeText) {
+        return customerRepository.findByEmailLike("%"+likeText+"%");
+    }
+
+    public Integer insertCustomer(CreateCustomerDto dto) {
+        return customerRepository.insertCustomer(dto);
+    }
+
+//    public List<Integer> incrementAgeAndRetrieve() {
+//        return customerRepository.incrementAgeAndRetrieve();
+//    }
 
 //    public List<CustomerNetworthDto> getAllCustomerNetworth() {
 //        return customerRepository.getAllCustomerNetworth();

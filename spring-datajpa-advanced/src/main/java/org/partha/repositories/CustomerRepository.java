@@ -1,10 +1,8 @@
 package org.partha.repositories;
 
 import jakarta.transaction.Transactional;
-import org.partha.dto.CustomerNetworthDto;
-import org.partha.dto.NetworthDto;
 import org.partha.entities.Customer;
-import org.springframework.data.domain.Page;
+import org.partha.projections.NetworthProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer,Integer> {
+public interface CustomerRepository extends JpaRepository<Customer,Integer>, CustomCustomerRepository {
 
     //making use of findBy<AttributeName> to filter on any column i.e. filtering with name as in this case
     //similarly we can do findby on any desired attribute that we want
@@ -31,7 +29,15 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 
     //List<Customer> findAllByNameLike(String likeText);
 
+
+    /** contains , containing and isContaining works similar **/
+    List<Customer> findByEmailContains(String containsText);
+
     List<Customer> findByNameContaining(String containText);
+
+    List<Customer> findByEmailIsContaining(String containingText);
+
+    List<Customer> findByEmailLike(String s);
 
     List<Customer> findByAgeLessThan(Integer age);
 
@@ -68,7 +74,7 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
             "left outer join \n" +
             "customer c\n" +
             "on temp.customerid = c.id", nativeQuery=true)
-    List<NetworthDto> getAllNetworth();
+    List<NetworthProjection> getAllNetworth();
 
 
 //    /**
@@ -100,13 +106,12 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
     /**
      * this method is to show to use update using native query
      * @param interestAmount
-     * @return
+     * @return number of records affected
      */
     @Modifying
     @Transactional
     @Query(value="update accounts set balance = balance+ :interestAmount" , nativeQuery = true)
     int creditBonus(int interestAmount);
-
 
     /**
      * pagination using jpql
