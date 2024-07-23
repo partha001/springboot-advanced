@@ -1,15 +1,19 @@
 package org.partha.service;
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.util.Strings;
 import org.partha.dto.CustomerNetworthDto;
 import org.partha.dto.NetworthDto;
 import org.partha.entities.Customer;
 import org.partha.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Log4j2
 @Service
 public class MyService {
 
@@ -89,6 +93,17 @@ public class MyService {
 
     public List<NetworthDto> getAllNetworth() {
         return customerRepository.getAllNetworth();
+    }
+
+    public void creditBonus(int bonus) {
+        int recordsUpdatad = customerRepository.creditBonus(bonus);
+        log.info("total number of records upated:{}", recordsUpdatad);
+    }
+
+
+    public Page<Customer> findAllByPage(int pageNumber, int pageSize){
+        Page<Customer> pageData = customerRepository.findAll(PageRequest.of(pageNumber, pageSize));
+        return pageData;
     }
 
 //    public List<CustomerNetworthDto> getAllCustomerNetworth() {

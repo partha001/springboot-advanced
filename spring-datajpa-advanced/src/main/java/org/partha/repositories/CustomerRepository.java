@@ -1,10 +1,12 @@
 package org.partha.repositories;
 
+import jakarta.transaction.Transactional;
 import org.partha.dto.CustomerNetworthDto;
 import org.partha.dto.NetworthDto;
 import org.partha.entities.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -95,7 +97,20 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 //    List<CustomerNetworthDto> findAllNetWorthByEmail(@Param("e") String email);
 
 
+    /**
+     * this method is to show to use update using native query
+     * @param interestAmount
+     * @return
+     */
+    @Modifying
+    @Transactional
+    @Query(value="update accounts set balance = balance+ :interestAmount" , nativeQuery = true)
+    int creditBonus(int interestAmount);
 
+
+    /**
+     * pagination using jpql
+     */
 
 
 

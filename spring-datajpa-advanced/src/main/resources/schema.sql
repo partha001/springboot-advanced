@@ -8,7 +8,7 @@ create table customer
 );
 
 
-create table account(
+create table accounts(
 	id integer auto_increment not null,
 	customerid  integer,
     type varchar(255) not null,

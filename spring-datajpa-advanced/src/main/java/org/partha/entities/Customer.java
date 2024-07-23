@@ -1,5 +1,6 @@
 package org.partha.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,13 +33,9 @@ public class Customer {
     @Column(name = "age")
     private Integer age;
 
-    @OneToMany(fetch=FetchType.LAZY ,cascade=CascadeType.ALL, mappedBy="account")
-    private List<Account> account;
-
-
-//	@OneToMany(fetch=FetchType.LAZY ,cascade=CascadeType.ALL, mappedBy="customer")
-//	//@JsonManagedReference
-//	private List<Account> accounts;
+	@OneToMany(fetch=FetchType.LAZY ,cascade=CascadeType.ALL, mappedBy="customer")
+	@JsonManagedReference //this is prevent circular serialization
+	private List<Account> accounts;
 
 
 }

@@ -1,5 +1,6 @@
 package org.partha.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "account")
+@Table(name = "accounts")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,6 +20,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonBackReference //this is prevent circular serialization
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="customerid")
     private Customer customer;

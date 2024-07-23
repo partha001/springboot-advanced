@@ -6,6 +6,9 @@ import org.partha.dto.NetworthDto;
 import org.partha.entities.Customer;
 import org.partha.service.MyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -95,6 +98,17 @@ public class MyController {
     @GetMapping(value = "/customers/getAllNetworth")
     public List<NetworthDto> getAllNetworth(){
         return myService.getAllNetworth();
+    }
+
+    @GetMapping(value = "/creditBonus")
+    public ResponseEntity<String> creditBonus(@RequestParam Integer bonus){
+        myService.creditBonus(bonus);
+        return new ResponseEntity<String>("bonus credited", HttpStatus.OK);
+    }
+
+    @GetMapping(value="/getCustomersByPage")
+    public ResponseEntity<Page<Customer>> pageResult(@RequestParam int pageNumber, @RequestParam int pageSize){
+        return new ResponseEntity<>(myService.findAllByPage(pageNumber, pageSize), HttpStatus.OK);
     }
 
 //    @GetMapping(value = "/customers/getAllCustomerNetworth")
