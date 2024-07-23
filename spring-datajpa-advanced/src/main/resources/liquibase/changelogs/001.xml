@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="mychangeset1" author="user">
+        <sql>
+            create table customer
+            (
+            id integer auto_increment not null,
+            name varchar(255) not null,
+            email varchar(255) not null,
+            age integer not null,
+            primary key(id)
+            );
+
+
+            create table accounts(
+            id integer auto_increment not null,
+            customerid  integer,
+            type varchar(255) not null,
+            balance integer,
+            foreign key (customerid) references customer(id),
+            primary key(id)
+            );
+
+            insert into customer values(1,'Sachin Tendulkar','sachin@gmail.com',40);
+            insert into customer values(2,'Sourav Ganguly','sourav@gmail.com', 42);
+
+
+            insert into accounts values(1,1,'savings',10000);
+            insert into accounts values(2,2,'recurring',20000);
+            insert into accounts values(3,2,'savings',50000);
+            insert into accounts values(4,2,'fd',50000);
+
+        </sql>
+    </changeSet>
+
+    <!--creating table using xml - Added the entity Car-->
+    <!--    <changeSet id="mychangeset2" author="user">-->
+    <!--        <createTable tableName="car">-->
+    <!--            <column name="id" type="bigint" autoIncrement="${autoIncrement}">-->
+    <!--                <constraints primaryKey="true" nullable="false" />-->
+    <!--            </column>-->
+    <!--            <column name="make" type="varchar(255)">-->
+    <!--                <constraints nullable="true" />-->
+    <!--            </column>-->
+    <!--            <column name="brand" type="varchar(255)">-->
+    <!--                <constraints nullable="true" />-->
+    <!--            </column>-->
+    <!--            <column name="price" type="double">-->
+    <!--                <constraints nullable="true" />-->
+    <!--            </column>-->
+    <!--        </createTable>-->
+    <!--    </changeSet>-->
+
+
+</databaseChangeLog>
