@@ -163,10 +163,10 @@ public class MyController {
         return new ResponseEntity<Integer>(myService.insertCustomer(dto), HttpStatus.OK);
     }
 
-    @GetMapping(value ="/incrementAgeAndRetrieve")
-    public ResponseEntity<List<Integer>> insertCustomer(){
-        return new ResponseEntity<List<Integer>>(myService.incrementAgeAndRetrieve(), HttpStatus.OK);
-    }
+//    @GetMapping(value ="/incrementAgeAndRetrieve")
+//    public ResponseEntity<List<Integer>> insertCustomer(){
+//        return new ResponseEntity<List<Integer>>(myService.incrementAgeAndRetrieve(), HttpStatus.OK);
+//    }
 
 
 
