@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.*;
+import java.util.Arrays;
 import java.util.List;
 
 public class CustomCustomerRepositoryImpl implements CustomCustomerRepository {
@@ -57,11 +58,42 @@ public class CustomCustomerRepositoryImpl implements CustomCustomerRepository {
 ////        });
 //        jdbcTemplate.query(preparedStatementCreator, new PreparedStatementSetter(), new ResultSetExtractor<>() {
 //        })
-//
-//        //jdbcTemplate.update(preparedStatementCreator, keyHolder);
-//
-//
+
+        //jdbcTemplate.update(preparedStatementCreator, keyHolder);
 //        return List.of(keyHolder.getKey().intValue());
+
+
+//        var preparedStatementCreatorFactory = new PreparedStatementCreatorFactory("update mydatabase.customer set age= age+1 WHERE id=1");
+//        preparedStatementCreatorFactory.setReturnGeneratedKeys(true);
 //
+//        PreparedStatementCreator preparedStatementCreator =
+//                preparedStatementCreatorFactory
+//                        .newPreparedStatementCreator(Arrays.asList());
+//        jdbcTemplate.query(preparedStatementCreator, new ResultSetExtractor<Integer>() {
+//            @Override
+//            public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+//
+//                return 0;
+//            }
+//        });
+//        return List.of(1);
+//
+//
+
+
+//            KeyHolder keyHolder = new GeneratedKeyHolder();
+//
+//            jdbcTemplate.update(connection -> {
+//                PreparedStatement ps = connection.prepareStatement("update mydatabase.customer set age= age+1 WHERE id=1", Statement.RETURN_GENERATED_KEYS);
+//                //ps.setString(1, message);
+//                return ps;
+//            }, keyHolder);
+//
+//            int key = keyHolder.getKey().intValue();
+//            return List.of(key);
+
 //    }
+
+
+
 }
