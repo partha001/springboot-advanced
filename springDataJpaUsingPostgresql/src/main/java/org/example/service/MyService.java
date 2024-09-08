@@ -1,10 +1,16 @@
 package org.example.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.example.ContextHolder;
 import org.example.repositories.BondInterestPayoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +26,10 @@ public class MyService {
 
     @Autowired
     BondInterestPayoutRepository bondInterestPayoutRepository;
+
+
+    @Autowired
+    DataSource dataSource;
 
     public void test(){
         Double totalInvestmentAmt = 2413412.85;
@@ -100,8 +110,43 @@ public class MyService {
         if(monthNumber==12)
             return 31;
         throw new RuntimeException("not a vaid month number");
-
     }
 
 
+    public void executeQuery() throws SQLException {
+
+        log.info("executeQuery():: started");
+        Connection connection = dataSource.getConnection();
+        PreparedStatement pstmt = connection.prepareStatement("insert into public.test_target select * from public.test_source");
+        ContextHolder.map.put("abc",pstmt);
+        try{
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            log.error("executeQuery():: exception occurred.",e);
+        }
+        finally {
+            if(connection!=null && !connection.isClosed()){
+                connection.close();
+                log.info("executeQuery():: connection closed successfully");
+            }
+
+        }
+        log.info("executeQuery():: completed");
+
+    }
+
+    public void cancelQuery() {
+        log.info("cancelQuery()::start");
+        Object object = ContextHolder.map.get("abc");
+        if(object instanceof  PreparedStatement){
+            PreparedStatement pstmt = (PreparedStatement) object;
+            try {
+                pstmt.cancel();
+                log.info("cancelQuery():: prepared statement cancelled successfully");
+            } catch (SQLException e) {
+                log.error("cancelQuery()::exception occurred in test2()",e);
+            }
+        }
+        log.info("cancelQuery()::end");
+    }
 }

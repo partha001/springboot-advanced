@@ -1,3 +1,19 @@
 #run the below command
 docker run  --name mypostgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydatabase -p 5432:5432  -d --rm postgres:16.3
 
+#  the below is for the usecase where the user wants to cancel a long running query from another thread
+  the below is for the usecase where the user wants to cancel a long running query from another thread
+  data setup for the usecase
+   step1: go to the below website which last a large list of csv files
+           https://www.stats.govt.nz/large-datasets/csv-files-for-download/
+   step2: i have download the file using the below link found in the above website
+           https://www3.stats.govt.nz/2018census/Age-sex-by-ethnic-group-grouped-total-responses-census-usually-resident-population-counts-2006-2013-2018-Censuses-RC-TA-SA2-DHB.zip
+   step3: run the application . this will create two table test_source and test_target using liquibase [002.xml]
+   step4: now load the downloaded csv into test_source using some data-import utility. i have used dbeaver to load the data into the table
+   step5: call the api http://localhost:8080/executeQuery  using swagger/browser/postman
+			this will initiate the process of inserting data from test_source to test_target
+   step6: the above api takes sometime to insert 34959672. thus will the above is executing. call be below api
+			http://localhost:8080/executeQuery
+			this will get hold of the preparedStatement object and cancel the previously invoked query.
+
+
