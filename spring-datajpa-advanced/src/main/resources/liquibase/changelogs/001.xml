@@ -27,6 +27,14 @@
 
             insert into customer values(1,'Sachin Tendulkar','sachin@gmail.com',40);
             insert into customer values(2,'Sourav Ganguly','sourav@gmail.com', 42);
+            insert into customer values(3,'Rohit Sharma','rohit@gmail.com', 42);
+            insert into customer values(4,'Virat Kohli','virat@gmail.com', 35);
+            insert into customer values(5,'Jasprit Bumrah','bumrah@gmail.com', 28);
+            insert into customer values(6,'Virandra Sehwag','sehwag@gmail.com', 45);
+            insert into customer values(7,'Rahul Dravid','rahul@gmail.com', 42);
+            insert into customer values(8,'Jhonty Rhodes','jhonty@gmail.com', 42);
+            insert into customer values(9,'Shane Warne','warne@gmail.com', 50);
+            insert into customer values(10,'Yuvraj Singh','yuvraj@gmail.com', 50);
 
 
             insert into accounts values(1,1,'savings',10000);

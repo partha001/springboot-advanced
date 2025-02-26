@@ -47,6 +47,8 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer>, Cus
 
     List<Customer> findByAgeInOrderByNameDesc(List<Integer> ageIn);
 
+    List<Customer> findByAgeBetween(Integer min, Integer max);
+
     /**
      * the query annotation can take either JPQL(similar to HQL) or native sql
      * example of @Query with JPQL. ie we have to use entityName and attributeNames in the query

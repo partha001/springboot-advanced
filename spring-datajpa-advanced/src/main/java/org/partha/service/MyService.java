@@ -8,6 +8,8 @@ import org.partha.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
@@ -88,6 +90,10 @@ public class MyService {
         return customerRepository.findByAgeInOrderByNameDesc(ageIn);
     }
 
+    public List<Customer> findByAgeBetween(int minage, int maxage){
+        return customerRepository.findByAgeBetween(minage, maxage);
+    }
+
     public List<Customer> getByEmailUsingJpql(String email) {
         return customerRepository.getCustomerByEmail(email);
     }
@@ -106,9 +112,65 @@ public class MyService {
     }
 
 
+    /**
+     * 1. it is also to be noted that while responding back for a page-request we should always add sorting
+     * else same data might appear in multiple pages . so we should add some default sorting even if its not asked
+     *
+     * 2. we request for the first page by passing pageNumber=0
+     *
+     * 3. since we are returning the page directly here and not the content so inspect the response to
+     * better understand what are the page attributes that we get.
+     *
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
     public Page<Customer> findAllByPage(int pageNumber, int pageSize){
-        Page<Customer> pageData = customerRepository.findAll(PageRequest.of(pageNumber, pageSize));
+        /** some other examples of making a page request**/
+//        Pageable sortedByName =
+//                PageRequest.of(0, 3, Sort.by("name"));
+//
+//        Pageable sortedByPriceDesc =
+//                PageRequest.of(0, 3, Sort.by("price").descending());
+//
+//        Pageable sortedByPriceDescNameAsc =
+//                PageRequest.of(0, 5, Sort.by("price").descending().and(Sort.by("name")));
+//
+
+        /** sorting should always be used even by default**/
+        //Page<Customer> pageData = customerRepository.findAll(PageRequest.of(pageNumber, pageSize);
+
+        Page<Customer> pageData = customerRepository.findAll(PageRequest.of(pageNumber, pageSize,Sort.by("id")));
         return pageData;
+
+    }
+
+
+    /**
+     * note that its the same method as above . only difference is the return type.
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    public List<Customer> findAllByPageData(int pageNumber, int pageSize) {
+        Page<Customer> pageData = customerRepository.findAll(PageRequest.of(pageNumber, pageSize,Sort.by("id")));
+        return pageData.getContent();
+    }
+
+    public void printAllCustomerPageWise() {
+        Pageable pageRequest = PageRequest.of(0, 2, Sort.by("id"));
+        Page<Customer> pageOfCustomers;
+
+
+        do {
+            pageOfCustomers = customerRepository.findAll(pageRequest);
+            //do something with the page data here
+            log.info("pageNumber:{} page", pageOfCustomers.getNumber());
+            pageOfCustomers.getContent().forEach(customer -> log.info(customer.toString()));
+
+
+            pageRequest = pageRequest.next();
+        } while (pageOfCustomers.hasNext());
     }
 
     public Customer createCustomer(CreateCustomerDto dto) {
@@ -131,6 +193,9 @@ public class MyService {
     public Integer insertCustomer(CreateCustomerDto dto) {
         return customerRepository.insertCustomer(dto);
     }
+
+
+
 
 //    public List<Integer> incrementAgeAndRetrieve() {
 //        return customerRepository.incrementAgeAndRetrieve();

@@ -82,6 +82,11 @@ public class MyController {
         return myService.ageLessThanEqual(age);
     }
 
+    @PostMapping(value = "/customers/ageBetween")
+    public List<Customer> ageInOrderByNameDesc(@RequestParam int minage, @RequestParam int maxage){
+        return myService.findByAgeBetween(minage, maxage);
+    }
+
     @PostMapping(value = "/customers/ageIn")
     public List<Customer> ageIn(@RequestBody  List<Integer> ageIn){
         return myService.ageIn(ageIn);
@@ -119,6 +124,17 @@ public class MyController {
     @GetMapping(value="/getCustomersByPage")
     public ResponseEntity<Page<Customer>> pageResult(@RequestParam int pageNumber, @RequestParam int pageSize){
         return new ResponseEntity<>(myService.findAllByPage(pageNumber, pageSize), HttpStatus.OK);
+    }
+
+    @GetMapping(value="/getCustomersByPageData")
+    public ResponseEntity<List<Customer>> pageResultData(@RequestParam int pageNumber, @RequestParam int pageSize){
+        return new ResponseEntity<>(myService.findAllByPageData(pageNumber, pageSize), HttpStatus.OK);
+    }
+
+    @GetMapping(value="/printAllCustomerPageWise")
+    public ResponseEntity printAllCustomerPageWise(){
+        myService.printAllCustomerPageWise();
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 

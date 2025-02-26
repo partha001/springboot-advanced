@@ -35,5 +35,13 @@ public class Customer {
 	@JsonManagedReference //this is prevent circular serialization
 	private List<Account> accounts;
 
-
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
