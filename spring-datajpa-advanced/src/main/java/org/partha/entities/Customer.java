@@ -9,7 +9,8 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "customer")
+
+@Table(name = "customer",schema = "mydatabase")
 @Getter
 @Setter
 @Builder
