@@ -1,0 +1,9 @@
+myapp:
+  write-datasource:
+    url: ffsfsf
+    username: usernaem
+    password: dsfsf
+  read-datasource:
+    url: url
+    username: username
+    password: password
