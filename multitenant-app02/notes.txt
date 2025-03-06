@@ -61,3 +61,8 @@ payload::
     "category": "electronics"
 }
 
+setup and more
+*******************
+for more details refer to google-drive-> springboot.docs -> multi-tenancy-with-springboot -> example01
+
+

@@ -1,0 +1,3 @@
+program setup
+**************************************************************
+as for setup steps follow googleDrive -> splunk.docx for setup
