@@ -1,0 +1,37 @@
+myapp:
+  write-datasource:
+    url: jdbc:postgresql://localhost:5433/mydatabase?allowPublicKeyRetrieval=true&useSSL=false&autoReconnect=true
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  read-datasource:
+    url: jdbc:postgresql://localhost:5434/mydatabase?allowPublicKeyRetrieval=true&useSSL=false&autoReconnect=true
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+    hikari.maximum-pool-size: 10
+
+
+
+
+#spring:
+#  datasource:
+#    write-datasource:
+#      url: jdbc:postgresql://localhost:5433/mydatabase?allowPublicKeyRetrieval=true&useSSL=false&autoReconnect=true
+#      username: postgres
+#      password: password
+#      driver-class-name: org.postgresql.Driver
+#      #database-platform: org.hibernate.dialect.PostgreSQLDialect
+#      hikari:
+#        maximumPoolSize: 10
+#    read-datasource:
+#      url: jdbc:postgresql://localhost:5434/mydatabase?allowPublicKeyRetrieval=true&useSSL=false&autoReconnect=true
+#      username: postgres
+#      password: password
+#      driver-class-name: org.postgresql.Driver
+#      hikari:
+#         maximumPoolSize: 20
+
+
+
+

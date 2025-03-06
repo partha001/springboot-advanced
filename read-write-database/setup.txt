@@ -1,0 +1,17 @@
+start the below 2 containers
+    docker run  --name mypostgres1 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydatabase -p 5433:5432  -d --rm postgres:16.3
+
+    docker run  --name mypostgres2 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydatabase -p 5434:5432  -d --rm postgres:16.3
+
+connect to both the databases from
+    insert into purchase public.values(1, 'gadgets', 'mac-book-pro-elite' );   //insert this into write-db ie..mypostgres1
+
+    insert into purchase values(1, 'gadgets', 'windows surfacebook' );     //insert this into read-db ie..mypostgres2
+
+
+finally run the application and call the endpoints in the controller
+
+
+it is to be noted that both the DBConfiguration classes work great . one can choose to uncomment/comment any of them .
+the file DBconfiguration1 comes with additional beans like jdbcTemplate and namedParameterJdbcTemplate. though these beans can be easily added even to the
+DBConfiguration2 simply by copying those bean code
