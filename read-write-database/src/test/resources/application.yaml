@@ -1,12 +1,12 @@
 myapp:
   write-datasource:
-    url: jdbc:postgresql://localhost:5433/mydatabase?allowPublicKeyRetrieval=true&useSSL=false&autoReconnect=true
+    url: jdbc:postgresql://localhost:5433/mydatabase?allowPublicKeyRetrieval=true&useSSL=false
     username: postgress
     password: password
     driver-class-name: org.postgresql.Driver
     #database-platform: org.hibernate.dialect.PostgreSQLDialect
   read-datasource:
-    url: jdbc:postgresql://localhost:5434/mydatabase?allowPublicKeyRetrieval=true&useSSL=false&autoReconnect=true
+    url: jdbc:postgresql://localhost:5434/mydatabase?allowPublicKeyRetrieval=true&useSSL=false
     username: postgress
     password: password
     driver-class-name: org.postgresql.Driver
