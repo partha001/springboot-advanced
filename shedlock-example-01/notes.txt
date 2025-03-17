@@ -1,0 +1,26 @@
+# Step1: run the postgres container by firing the below command
+docker run  --name mypostgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydatabase -p 5432:5432  -d --rm postgres:16.3
+
+
+# Step2: create the below table :
+CREATE TABLE public.shedlock (
+ name VARCHAR(64),
+ lock_until TIMESTAMP(3) NULL,
+ locked_at TIMESTAMP(3) NULL,
+ locked_by VARCHAR(255),
+ PRIMARY KEY (name)
+);
+
+
+# Step3: change the cron to an upcoming nearby time to test in Task1.java
+
+# Step4: do mvn clean install
+
+# Step5: run two instances of the application from 2 different terminals
+            terminal1: java -jar target\shedlock-example-01-1.0-SNAPSHOT.jar --server.port=8081
+            terminal2: java -jar target\shedlock-example-01-1.0-SNAPSHOT.jar --server.port=8082
+
+
+
+
+
